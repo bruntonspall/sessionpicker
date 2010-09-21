@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html lang="en" class="no-js">
+<!-- the "no-js" class is for Modernizr. -->
+
+<head>
+
+	<meta charset="utf-8" />
+	
+	<title>
+        {% block title %}
+        HTML5 Template
+        {% endblock %}
+	</title>
+	
+	<meta name="description" content="Tracks who voted for whom in online games of werewolf" />
+	<!-- Google will often use this as its description of your page/site. Make it good. -->
+	
+	<meta name="author" content="Michael Brunton-Spall" />
+	<meta name="Copyright" content="Copyright Michael Brunton-Spall 2010. All Rights Reserved." />
+
+	<meta name="DC.title" content="Werewolf Guilt Tracker" />
+	<meta name="DC.subject" content="Tracks who voted for whom in online games of werewolf" />
+	<meta name="DC.creator" content="Michael Brunton-Spall" />
+	
+	<meta name="google-site-verification" content="" />
+	<!-- Speaking of Google, don't forget to set your site up: http://google.com/webmasters -->
+	
+	<link rel="shortcut icon" href="/static/img/favicon.png"/>
+	<!-- This is the traditional favicon.
+		 - size: 16x16 or 32x32
+		 - transparency is OK
+		 - see wikipedia for info on broswer support: http://mky.be/favicon/ -->
+	
+	<link rel="apple-touch-icon" href="/static/img/custom_icon.png"/>
+	<!-- The is the icon for iOS's Web Clip.
+		 - size: 57x57 for older iPhones, 72x72 for iPads, 114x114 for iPhone4's retina display (IMHO, just go ahead and use the biggest one)
+		 - To prevent iOS from applying its styles to the icon name it thusly: apple-touch-icon-precomposed.png
+		 - Transparency is not recommended (iOS will put a black BG behind the icon) -->
+
+    <link href="/static/css/core.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/main.css" media="all" />
+    <!-- main.css is a gateway file. You will spend your time in core.css -->
+
+    <link rel="stylesheet" href="/static/css/_print/main.css" media="print" />
+
+    <!-- These are IE-specific conditional style sheets.
+         You might consider removing the ones you don't end up using. -->
+
+    <!--[if IE]>
+    <link rel="stylesheet" href="/static/css/_patches/win-ie-all.css" media="all" />
+    <![endif]-->
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="/static/css/_patches/win-ie7.css" media="all" />
+    <![endif]-->
+    <!--[if lt IE 7]>
+    <link rel="stylesheet" href="/static/css/_patches/win-ie-old.css" media="all" />
+    <![endif]-->
+    <link rel="stylesheet" href="/static/css/smoothness/jquery-ui-1.8.4.custom.css" media="all" />
+    <link rel="stylesheet" href="/static/css/960_24_col.css" media="all" />
+
+	<!-- jQuery -->
+	<script src="/static/js/jquery-1.4.2.min.js"></script>
+    <script src="/static/js/jquery-ui-1.8.4.custom.min.js"></script>
+    <script src="/static/js/functions.js"></script>
+    <script src="/static/js/modernizr-1.5.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body {% block bodyattrs %}{% endblock %}>
+	{% block header %}
+	{% endblock %}
+	{% block body %}
+	{% endblock %}
+</body>
+</html>
