@@ -11,7 +11,7 @@
 	{% if not user %}
 	<li class="signin"><a href="/twitter/signin">Sign in with twitter</a></li>
 	{% else %}
-	<p>user: {{user.fullname}} - {{user.twitter_name}}</p>
+	<p>Welcome back {{user.display_name}}</p>
 	<li><a href="/signout">Sign out</a></li>
 	<li><a href="/session/new">Submit a session</a></li>
 		{% endif %}
@@ -19,22 +19,34 @@
 </nav>
 {% endblock %}
 {% block body %}
-<section>
+<section class="grid_16 prefix_4 suffix_4">
 	{% for session in sessions %}
 	<article class="session">
 		<img src="{{session.submitter.image_url}}">
 		<h2>{{session.title}}</h2>
 		<h2>{{session.submitter.fullname}}</h2>
 		<p>{{session.description}}</p>
+		{% if user %}
+		<a href="/like/{{session.key}}">Like</a>
+		{% endif %}
 	</article>
 	{% endfor %}
+	{% if user %}
 	<article class="session">
+		<h2>Create a session</h2>
+		<form class="newsession" action="/session/new" method="POST">
+			<label for="title">Session Title</label> <input id="title" type="text" name="title" placeholder="My Exciting Session Title" required></input>
+			<label for="description">Session Description</label> <textarea id="description" name="description" rows="4" cols="60" placeholder="My Exciting Session Description" required></textarea>
+			<input type="submit">Submit</input>
+			
+			</form>
 		<img src="{{session.submitter.image_url}}">
 		<h2>Ipsum Lorem</h2>
 		<h2>Lorem dolla factor</h2>
 		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo, sem eget sagittis suscipit, leo orci sagittis enim, elementum aliquet mauris magna egestas erat. Mauris at eros id ligula sodales iaculis. Vivamus egestas lectus vitae eros consectetur adipiscing. Maecenas ligula elit, porttitor sit amet dictum id, ullamcorper nec ipsum. Vivamus non nisi nulla. Etiam eu lorem et nisi luctus sollicitudin. Integer ligula sapien, luctus volutpat bibendum non, commodo sit amet libero. Sed sit amet felis non nulla aliquam bibendum eget nec dolor. Morbi nibh tortor, placerat nec rhoncus et, egestas eget lacus. Ut mattis pulvinar hendrerit.
 		</p>
 	</article>
+	{% endif %}
 	<article class="session">
 		<img src="{{session.submitter.image_url}}">
 		<h2>nulla eget laoreet faucibus, ipsum neque vehicula sapien,</h2>

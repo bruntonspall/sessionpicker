@@ -11,7 +11,8 @@ from google.appengine.api import users
 import logging
 from google.appengine.api.labs.taskqueue.taskqueue import Task
 from google.appengine.api.labs import taskqueue
-
+import appengine_utilities.sessions
+import models
 
 def render_admin_template(self, end_point, template_values):
     user = users.get_current_user()
@@ -28,3 +29,10 @@ def render_template(self, end_point, template_values):
 def slugify(word):
     return word.replace(' ', "-").lower()
 
+def get_session_user():
+    session = appengine_utilities.sessions.Session()
+    username = session.get('user', None)
+    if username:
+        return models.User.get_by_key_name(username)
+    return None
+    

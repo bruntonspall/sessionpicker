@@ -21,12 +21,16 @@ import models
 import settings
 import appengine_utilities.sessions
 import oauth
+import logging
 
 class MainHandler(webapp.RequestHandler):
     def get(self):
+        user = None
         session = appengine_utilities.sessions.Session()
-        user = session.get('user', None)
-        helpers.render_template(self, 'mainpage.html', {'user':user})
+        username = session.get('user', None)
+        if username:
+            user = models.User.get_by_key_name(username)
+        helpers.render_template(self, 'mainpage.html', {'user':user, 'sessions':models.Session.all()})
 
 class TwitterSigninHandler(webapp.RequestHandler):
     def get(self):
@@ -39,7 +43,7 @@ class TwitterCallbackHandler(webapp.RequestHandler):
         auth_token = self.request.get("oauth_token")
         auth_verifier = self.request.get("oauth_verifier")
         user_info = client.get_user_info(auth_token, auth_verifier=auth_verifier)
-        user = models.User.get_or_insert(
+        user = models.User.get_or_insert( user_info['username'],
            twitter_name = user_info['username'],
            display_name = user_info['name'],
            image_url = user_info['picture'],
@@ -47,14 +51,34 @@ class TwitterCallbackHandler(webapp.RequestHandler):
            oauth_secret = user_info['secret']
         )
         session = appengine_utilities.sessions.Session()
-        session['user'] = user
+        session['user'] = user.twitter_name
         self.redirect('/')
 
+class CreateSessionHandler(webapp.RequestHandler):
+    def post(self):
+        session = appengine_utilities.sessions.Session()
+        user = helpers.get_session_user()
+        title = self.request.get('title')
+        description = self.request.get('description')
+        if description: description = description.replace('\n','<br>')
+        logging.info('title: %s description: %s' % (title, description))
+        session = models.Session(title=title, description=description, submitter=user).save()
+        self.redirect('/')
+        
+
+class FakeUserHandler(webapp.RequestHandler):
+    def get(self):
+        session = appengine_utilities.sessions.Session()
+        session['user'] = 'bruntonspall'
+        self.redirect('/')
+        
 def main():
     application = webapp.WSGIApplication([
     ('/', MainHandler),
     ('/twitter/signin', TwitterSigninHandler),
     ('/twitter/callback', TwitterCallbackHandler),
+    ('/session/new', CreateSessionHandler),
+    ('/debug/fakeuser', FakeUserHandler),
     ],
                                          debug=True)
     util.run_wsgi_app(application)
