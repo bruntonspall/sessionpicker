@@ -78,7 +78,7 @@ def main():
     ('/twitter/signin', TwitterSigninHandler),
     ('/twitter/callback', TwitterCallbackHandler),
     ('/session/new', CreateSessionHandler),
-    ('/debug/fakeuser', FakeUserHandler),
+#    ('/debug/fakeuser', FakeUserHandler),
     ],
                                          debug=True)
     util.run_wsgi_app(application)
