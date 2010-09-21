@@ -79,8 +79,8 @@ class LikeSessionHandler(webapp.RequestHandler):
         obj = models.Like.all().filter('session =', session).filter('user =', user).get()
         if not obj:
             obj = models.Like(session=session, user=user).save()
-            sess.likes += 1
-            sess.save()        
+            session.likes += 1
+            session.save()        
         self.redirect('/')
         
 
