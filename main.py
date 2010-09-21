@@ -15,11 +15,11 @@
 # limitations under the License.
 #
 
+from google.appengine.dist import use_library
+use_library('django', '1.1')
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
-from google.appengine.dist import use_library
-use_library('django', '1.1')
 import helpers
 import models
 import settings
@@ -41,6 +41,12 @@ class MainHandler(webapp.RequestHandler):
 class TwitterSigninHandler(webapp.RequestHandler):
     def get(self):
         client = oauth.TwitterClient(settings.CONSUMER_KEY, settings.CONSUMER_SECRET, 'http://sessionpicker.appspot.com/twitter/callback')
+        result = client.make_request(
+            "http://twitter.com/statuses/update.json",
+            token=client_token,
+            secret=client_secret,
+            additional_params=additional_params,
+            method=urlfetch.POST)
         self.redirect(client.get_authorization_url())
         
 class TwitterCallbackHandler(webapp.RequestHandler):
@@ -69,6 +75,7 @@ class CreateSessionHandler(webapp.RequestHandler):
         logging.info('title: %s description: %s' % (title, description))
         session = models.Session(title=title, description=description, submitter=user).save()
         self.redirect('/')
+
 class LikeSessionHandler(webapp.RequestHandler):
     def get(self, id):
         user = helpers.get_session_user()
@@ -89,6 +96,12 @@ class FakeUserHandler(webapp.RequestHandler):
         session = appengine_utilities.sessions.Session()
         session['user'] = 'bruntonspall'
         self.redirect('/')
+
+class SignoutHandler(webapp.RequestHandler):
+    def get(self):
+        session = appengine_utilities.sessions.Session()
+        del session['user']
+        self.redirect('/')
         
 def main():
     application = webapp.WSGIApplication([
@@ -97,6 +110,7 @@ def main():
     ('/twitter/callback', TwitterCallbackHandler),
     ('/session/new', CreateSessionHandler),
     ('/session/(?P<id>[a-zA-Z0-9-]+)/like', LikeSessionHandler),
+    ('/signout', SignoutHandler),
 #    ('/debug/fakeuser', FakeUserHandler),
     ],
                                          debug=True)
