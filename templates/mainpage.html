@@ -19,7 +19,7 @@
 </nav>
 <section>
 	{% for session in sessions %}
-	<div class="session">
+	<article class="session">
 		<div class="container_24">
 			<div class="grid_4 image alpha">
 				<img class="avatar" src="{{session.submitter.image_url}}">
@@ -37,7 +37,7 @@
 			{% endif %}
 		</div>
 		<div class="clear"></div>
-	</div>
+	</article>
 	<div class="clear"></div>
 	{% endfor %}
 	{% if user %}
