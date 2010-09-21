@@ -33,7 +33,13 @@
 		<div class="descbox">
 			<p class="description">{{session.description|linebreaks}}</p>
 			{% if user %}
-			<a href="/session/{{session.key}}/like">Like</a>
+			{% if session.user_has_voted_for %}
+			<p>You have already voted for this</p>
+			{% else %}
+			<p><a href="/session/{{session.key}}/like">Vote for this</a></p>
+			{% endif %}
+			{% else %}
+			<p>Login to vote for this</p>
 			{% endif %}
 		</div>
 		<div class="clear"></div>

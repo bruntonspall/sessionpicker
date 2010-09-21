@@ -25,12 +25,18 @@ class User(db.Model):
     image_url = db.LinkProperty(required=True)
     oauth_token = db.StringProperty(required=True)
     oauth_secret = db.StringProperty(required=True)
-    
+        
 class Session(db.Model):
     title = db.StringProperty(required=True)
     submitter = db.ReferenceProperty(User, required=True)
     description = db.TextProperty(required=True)
     likes = db.IntegerProperty(default=0,required=True)
+    
+    def user_has_voted_for(self):
+        user = helpers.get_session_user()
+        if self.like_set.filter('user =', user).get():
+            return True
+        return False
 
 class Like(db.Model):
     user = db.ReferenceProperty(User, required=True)
