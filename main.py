@@ -36,7 +36,7 @@ class MainHandler(webapp.RequestHandler):
         username = session.get('user', None)
         if username:
             user = models.User.get_by_key_name(username)
-        helpers.render_template(self, 'mainpage.html', {'user':user, 'sessions':models.Session.all()})
+        helpers.render_template(self, 'mainpage.html', {'user':user, 'sessions':models.Session.all().order('title')})
 
 class TwitterSigninHandler(webapp.RequestHandler):
     def get(self):
