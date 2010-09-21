@@ -6,7 +6,6 @@
 	<header>
 		<h1>Scale Camp 2010 Session Picker</h1>
 <p>ScaleCamp is an unconference that will happen on Dec 10th 2010.  As well as some open spots, we thought it would help organisation this year to have a session picker so we can find out some of the sessions that are popular early and put them in rooms that are big enough.  There will still be an amount of the grid freely available on the day for impromptu sessions.</p>
-</header>
 <nav>
 <ul class="headerline">
 	{% if not user %}
@@ -17,7 +16,8 @@
 		{% endif %}
 	</ul>
 </nav>
-<section>
+</header>
+	<section>
 	{% for session in sessions %}
 	<article class="session">
 		<div class="container_24">
@@ -40,8 +40,9 @@
 	</article>
 	<div class="clear"></div>
 	{% endfor %}
+	</section>
 	{% if user %}
-	<div class="createsession">
+	<section class="createsession">
 		<h2>Create a session</h2>
 		<form class="newsession container_24" action="/session/new" method="POST">
 			<label for="title" class="grid_4 alpha">Session Title</label> 
@@ -53,9 +54,8 @@
 			<div  class="grid_4 prefix_4 suffix_9"><input type="submit"></input></div>
 			
 			</form>
-	</div>
+	</section>
 	{% endif %}
-</section>
 <footer class="grid_12 prefix_6 suffix_6">
 	<p>Built by <a href="http://github.com/bruntonspall">Michael Brunton-Spall</a> using <a href="http://github.com/mikeknapp/AppEngine-OAuth-Library">Mike Knapp's AppEngine OAuth library</a>, <a href="http://github.com/joerussbowman/gaeutilities">gaeutilities</a> and <a href="http://appengine.google.com">Google AppEngine</a></p>
 	</footer>
