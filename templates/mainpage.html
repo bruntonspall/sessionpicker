@@ -25,9 +25,9 @@
 		<img src="{{session.submitter.image_url}}">
 		<h2>{{session.title}}</h2>
 		<h2>{{session.submitter.fullname}}</h2>
-		<p>{{session.description}}</p>
+		<p>{{session.description|linebreaks}}</p>
 		{% if user %}
-		<a href="/like/{{session.key}}">Like</a>
+		<a href="/like/{{session.id}}">Like</a>
 		{% endif %}
 	</article>
 	{% endfor %}

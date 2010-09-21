@@ -14,14 +14,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
+from google.appengine.dist import use_library
+use_library('django', '1.1')
 import helpers
 import models
 import settings
 import appengine_utilities.sessions
 import oauth
 import logging
+
+
 
 class MainHandler(webapp.RequestHandler):
     def get(self):
@@ -60,7 +66,6 @@ class CreateSessionHandler(webapp.RequestHandler):
         user = helpers.get_session_user()
         title = self.request.get('title')
         description = self.request.get('description')
-        if description: description = description.replace('\n','<br>')
         logging.info('title: %s description: %s' % (title, description))
         session = models.Session(title=title, description=description, submitter=user).save()
         self.redirect('/')
@@ -78,11 +83,12 @@ def main():
     ('/twitter/signin', TwitterSigninHandler),
     ('/twitter/callback', TwitterCallbackHandler),
     ('/session/new', CreateSessionHandler),
-#    ('/debug/fakeuser', FakeUserHandler),
+    ('/debug/fakeuser', FakeUserHandler),
     ],
                                          debug=True)
     util.run_wsgi_app(application)
 
 
 if __name__ == '__main__':
+
     main()
