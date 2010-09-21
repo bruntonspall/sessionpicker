@@ -7,7 +7,7 @@
 	<p>As well as some open spots, we thought it would help organisation this year to have a session picker so we can find out some of the sessions that are popular early and put them in rooms that are big enough.  There will still be an amount of the grid freely available on the day for impromptu sessions.</p>
 </header>
 
-<section>
+<section class="main">
 	<nav class="controls">
 		{% if not user %}			
 			<p><a href="/twitter/signin"><img src="/static/img/sign-in-with-twitter-d.png"/></a>You need to sign in to like or add your own sessions</p>
@@ -27,7 +27,7 @@
 		<article class="session">
 			<img src="{{session.submitter.image_url}}">
 			<h2>{{session.title}}</h2>
-			<h3>{{session.submitter.display_name}}</h2>
+			<h3>{{session.submitter.display_name}}</h3>
 			<div class="description">
 				{{session.description|linebreaks}}
 			</div>
@@ -46,7 +46,7 @@
 		{% endfor %}
 	</section>
 	<footer>
-		<p>Built by <a href="http://github.com/bruntonspall">Michael Brunton-Spall</a> using <a href="http://github.com/mikeknapp/AppEngine-OAuth-Library">Mike Knapp's AppEngine OAuth library</a>, <a href="http://github.com/joerussbowman/gaeutilities">gaeutilities</a> and <a href="http://appengine.google.com">Google AppEngine</a></p>
+		<p>Built by <a href="http://github.com/bruntonspall">Michael Brunton-Spall</a> and Design by <a href="http://github.com/garethr">Gareth Rushgrove</a>. Uses <a href="http://github.com/mikeknapp/AppEngine-OAuth-Library">Mike Knapp's AppEngine OAuth library</a>, <a href="http://github.com/joerussbowman/gaeutilities">gaeutilities</a> and <a href="http://appengine.google.com">Google AppEngine</a></p>
 	</footer>
 </section>
 {% endblock %}
