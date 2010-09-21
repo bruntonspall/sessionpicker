@@ -61,3 +61,28 @@ abbr {
 header {
     padding-bottom: 30px;
 }
+
+body {
+    background-color: #BFFFB9;
+    color: #211426;
+}
+
+.description {
+    margin: 10px 0px 10px 0px;
+}
+
+.session, .createsession {
+    display: block;
+    background-color: #75B270;
+    border: 1px #459240 solid;
+    -webkit-box-shadow: 2px 2px 1px #AAA;
+    -moz-box-shadow: 2px 2px 1px #888;
+    -o-box-shadow: 2px 2px 1px #888;
+    -box-shadow: 2px 2px 1px #888;
+    box-shadow: 2px 2px 1px #888;
+    margin: 0px 0px 40px 0px;
+    padding: 10px;
+}
+footer {
+    padding-top: 30px;
+}

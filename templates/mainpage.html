@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Scale Camp Session Picker{% endblock %}
 {% block bodyattrs %}class="container_24"{% endblock %}
-{% block header %}
+{% block body %}
+<div class="grid_16 prefix_4 suffix_4">
 	<header>
 		<h1>Scale Camp 2010 Session Picker</h1>
 <p>ScaleCamp is an unconference that will happen on Dec 10th 2010.  As well as some open spots, we thought it would help organisation this year to have a session picker so we can find out some of the sessions that are popular early and put them in rooms that are big enough.  There will still be an amount of the grid freely available on the day for impromptu sessions.</p>
@@ -16,34 +17,46 @@
 		{% endif %}
 	</ul>
 </nav>
-{% endblock %}
-{% block body %}
-<section class="grid_16 prefix_4 suffix_4">
+<section>
 	{% for session in sessions %}
-	<article class="session">
-		<img src="{{session.submitter.image_url}}">
-		<h2>{{session.title}}</h2>
-		<h2>{{session.submitter.display_name}}</h2>
-		<p>{{session.likes}}</p>
-		<p>{{session.description|linebreaks}}</p>
-		{% if user %}
-		<a href="/session/{{session.key}}/like">Like</a>
-		{% endif %}
-	</article>
+	<div class="session">
+		<div class="container_24">
+			<div class="grid_4 image alpha">
+				<img class="avatar" src="{{session.submitter.image_url}}">
+			</div>
+			<div class="grid_20 titlebox omega">
+				<h2 class="title">{{session.title}}</h2>
+				<h2 class="presenter">{{session.submitter.display_name}}</h2>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="descbox">
+			<p class="description">{{session.description|linebreaks}}</p>
+			{% if user %}
+			<a href="/session/{{session.key}}/like">Like</a>
+			{% endif %}
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
 	{% endfor %}
 	{% if user %}
-	<article class="session">
+	<div class="createsession">
 		<h2>Create a session</h2>
-		<form class="newsession" action="/session/new" method="POST">
-			<label for="title">Session Title</label> <input id="title" type="text" name="title" placeholder="My Exciting Session Title" required></input>
-			<label for="description">Session Description</label> <textarea id="description" name="description" rows="4" cols="60" placeholder="My Exciting Session Description" required></textarea>
-			<input type="submit">Submit</input>
+		<form class="newsession container_24" action="/session/new" method="POST">
+			<label for="title" class="grid_4 alpha">Session Title</label> 
+			<div class"grid_20 omega"><input id="title" type="text" name="title" placeholder="My Exciting Session Title" required></input></div>
+			<div class="clear"></div>
+			<label for="description" class="grid_4 alpha" >Session Description</label> 
+			<div class="grid_20 omega"><textarea id="description" name="description" rows="4" cols="60" placeholder="My Exciting Session Description" required></textarea></div>
+			<div class="clear"></div>
+			<div  class="grid_4 prefix_4 suffix_9"><input type="submit"></input></div>
 			
 			</form>
-	</article>
+	</div>
 	{% endif %}
 </section>
-<footer>
+<footer class="grid_12 prefix_6 suffix_6">
 	<p>Built by <a href="http://github.com/bruntonspall">Michael Brunton-Spall</a> using <a href="http://github.com/mikeknapp/AppEngine-OAuth-Library">Mike Knapp's AppEngine OAuth library</a>, <a href="http://github.com/joerussbowman/gaeutilities">gaeutilities</a> and <a href="http://appengine.google.com">Google AppEngine</a></p>
 	</footer>
 {% endblock %}
