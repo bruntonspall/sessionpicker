@@ -13,7 +13,6 @@
 	{% else %}
 	<p>Welcome back {{user.display_name}}</p>
 	<li><a href="/signout">Sign out</a></li>
-	<li><a href="/session/new">Submit a session</a></li>
 		{% endif %}
 	</ul>
 </nav>
@@ -24,10 +23,11 @@
 	<article class="session">
 		<img src="{{session.submitter.image_url}}">
 		<h2>{{session.title}}</h2>
-		<h2>{{session.submitter.fullname}}</h2>
+		<h2>{{session.submitter.display_name}}</h2>
+		<p>{{session.likes}}</p>
 		<p>{{session.description|linebreaks}}</p>
 		{% if user %}
-		<a href="/like/{{session.id}}">Like</a>
+		<a href="/session/{{session.key}}/like">Like</a>
 		{% endif %}
 	</article>
 	{% endfor %}
@@ -43,4 +43,7 @@
 	</article>
 	{% endif %}
 </section>
+<footer>
+	<p>Built by <a href="http://github.com/bruntonspall">Michael Brunton-Spall</a> using <a href="http://github.com/mikeknapp/AppEngine-OAuth-Library">Mike Knapp's AppEngine OAuth library</a>, <a href="http://github.com/joerussbowman/gaeutilities">gaeutilities</a> and <a href="http://appengine.google.com">Google AppEngine</a></p>
+	</footer>
 {% endblock %}

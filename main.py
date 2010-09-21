@@ -69,6 +69,19 @@ class CreateSessionHandler(webapp.RequestHandler):
         logging.info('title: %s description: %s' % (title, description))
         session = models.Session(title=title, description=description, submitter=user).save()
         self.redirect('/')
+class LikeSessionHandler(webapp.RequestHandler):
+    def get(self, id):
+        user = helpers.get_session_user()
+        session = models.Session.get(id)
+        if not session:
+            self.redirect('/')
+        #We only want to count a like once, if we find an object, don't increment the count
+        obj = models.Like.all().filter('session =', session).filter('user =', user).get()
+        if not obj:
+            obj = models.Like(session=session, user=user).save()
+            sess.likes += 1
+            sess.save()        
+        self.redirect('/')
         
 
 class FakeUserHandler(webapp.RequestHandler):
@@ -83,6 +96,7 @@ def main():
     ('/twitter/signin', TwitterSigninHandler),
     ('/twitter/callback', TwitterCallbackHandler),
     ('/session/new', CreateSessionHandler),
+    ('/session/(?P<id>[a-zA-Z0-9-]+)/like', LikeSessionHandler),
 #    ('/debug/fakeuser', FakeUserHandler),
     ],
                                          debug=True)

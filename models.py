@@ -30,6 +30,7 @@ class Session(db.Model):
     title = db.StringProperty(required=True)
     submitter = db.ReferenceProperty(User, required=True)
     description = db.TextProperty(required=True)
+    likes = db.IntegerProperty(default=0,required=True)
 
 class Like(db.Model):
     user = db.ReferenceProperty(User, required=True)
