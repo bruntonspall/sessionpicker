@@ -41,13 +41,7 @@ class MainHandler(webapp.RequestHandler):
 class TwitterSigninHandler(webapp.RequestHandler):
     def get(self):
         client = oauth.TwitterClient(settings.CONSUMER_KEY, settings.CONSUMER_SECRET, 'http://sessionpicker.appspot.com/twitter/callback')
-        result = client.make_request(
-            "http://twitter.com/statuses/update.json",
-            token=client_token,
-            secret=client_secret,
-            additional_params=additional_params,
-            method=urlfetch.POST)
-        self.redirect(client.get_authorization_url())
+        self.redirect(client.get_authenticate_url())
         
 class TwitterCallbackHandler(webapp.RequestHandler):
     def get(self):
