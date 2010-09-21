@@ -1,68 +1,52 @@
 {% extends "base.html" %}
 {% block title %}Scale Camp Session Picker{% endblock %}
-{% block bodyattrs %}class="container_24"{% endblock %}
 {% block body %}
-<div class="grid_16 prefix_4 suffix_4">
-	<header>
-		<h1>Scale Camp 2010 Session Picker</h1>
-<p>ScaleCamp is an unconference that will happen on Dec 10th 2010.  As well as some open spots, we thought it would help organisation this year to have a session picker so we can find out some of the sessions that are popular early and put them in rooms that are big enough.  There will still be an amount of the grid freely available on the day for impromptu sessions.</p>
-<nav>
-<ul class="headerline">
-	{% if not user %}
-	<li class="signin"><a href="/twitter/signin">Sign in with twitter</a></li>
-	{% else %}
-	<p>Welcome back {{user.display_name}}</p>
-	<li><a href="/signout">Sign out</a></li>
-		{% endif %}
-	</ul>
-</nav>
+<header>
+	<h1>Scale Camp <span>Session Picker</span></h1>
+	<p><strong>ScaleCamp</strong> is an unconference that will happen on <strong>Dec 10th 2010.</strong></p>
+	<p>As well as some open spots, we thought it would help organisation this year to have a session picker so we can find out some of the sessions that are popular early and put them in rooms that are big enough.  There will still be an amount of the grid freely available on the day for impromptu sessions.</p>
 </header>
-	<section>
-	{% for session in sessions %}
-	<article class="session">
-		<div class="container_24">
-			<div class="grid_4 image alpha">
-				<img class="avatar" src="{{session.submitter.image_url}}">
-			</div>
-			<div class="grid_20 titlebox omega">
-				<h2 class="title">{{session.title}}</h2>
-				<h2 class="presenter">{{session.submitter.display_name}}</h2>
-			</div>
-		</div>
-		<div class="clear"></div>
-		<div class="descbox">
-			<p class="description">{{session.description|linebreaks}}</p>
-			{% if user %}
-			{% if session.user_has_voted_for %}
-			<p>You have already voted for this</p>
-			{% else %}
-			<p><a href="/session/{{session.key}}/like">Vote for this</a></p>
-			{% endif %}
-			{% else %}
-			<p>Login to vote for this</p>
-			{% endif %}
-		</div>
-		<div class="clear"></div>
-	</article>
-	<div class="clear"></div>
-	{% endfor %}
-	</section>
-	{% if user %}
-	<section class="createsession">
-		<h2>Create a session</h2>
-		<form class="newsession container_24" action="/session/new" method="POST">
-			<label for="title" class="grid_4 alpha">Session Title</label> 
-			<div class="grid_20 omega"><input id="title" type="text" name="title" placeholder="My Exciting Session Title" required></input></div>
-			<div class="clear"></div>
-			<label for="description" class="grid_4 alpha" >Session Description</label> 
-			<div class="grid_20 omega"><textarea id="description" name="description" rows="4" cols="60" placeholder="My Exciting Session Description" required></textarea></div>
-			<div class="clear"></div>
-			<div  class="grid_4 prefix_4 suffix_9"><input type="submit"></input></div>
-			
-			</form>
-	</section>
+
+<section>
+	<nav class="controls">
+		{% if not user %}			
+			<p><a href="/twitter/signin"><img src="/static/img/sign-in-with-twitter-d.png"/></a>You need to sign in to like or add your own sessions</p>
+		{% else %}
+			<p>Welcome back {{user.display_name}} - <a href="/signout">Sign out</a></p>
+		{% endif %}
+		{% if user %}
+		<form action="/session/new" method="POST">
+		    <label for="title">Title</label> <input type="text" id="title" name="title" placeholder="My Exciting Session Title" required/>
+		    <label for="description">Details</label><textarea id="description" name=-"description" placeholder="My Exciting Session Description" required></textarea>
+		    <input type="submit" value="Suggest session" class="btn"/>
+		</form>
 	{% endif %}
-<footer>
-	<p>Built by <a href="http://github.com/bruntonspall">Michael Brunton-Spall</a> using <a href="http://github.com/mikeknapp/AppEngine-OAuth-Library">Mike Knapp's AppEngine OAuth library</a>, <a href="http://github.com/joerussbowman/gaeutilities">gaeutilities</a> and <a href="http://appengine.google.com">Google AppEngine</a></p>
+	</nav>
+	<section class="sessions">
+		{% for session in sessions %}
+		<article class="session">
+			<img src="{{session.submitter.image_url}}">
+			<h2>{{session.title}}</h2>
+			<h3>{{session.submitter.display_name}}</h2>
+			<div class="description">
+				{{session.description|linebreaks}}
+			</div>
+			<div class="vote">
+				{% if user %}
+				{% if session.user_has_voted_for %}
+				<p>You have already voted for this</p>
+				{% else %}
+				<p><a href="/session/{{session.key}}/like">Vote for this</a></p>
+				{% endif %}
+				{% else %}
+				<p>Login to vote for this</p>
+				{% endif %}
+			</div>
+		</article>
+		{% endfor %}
+	</section>
+	<footer>
+		<p>Built by <a href="http://github.com/bruntonspall">Michael Brunton-Spall</a> using <a href="http://github.com/mikeknapp/AppEngine-OAuth-Library">Mike Knapp's AppEngine OAuth library</a>, <a href="http://github.com/joerussbowman/gaeutilities">gaeutilities</a> and <a href="http://appengine.google.com">Google AppEngine</a></p>
 	</footer>
+</section>
 {% endblock %}
