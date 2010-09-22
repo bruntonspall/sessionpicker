@@ -66,7 +66,7 @@ class CreateSessionHandler(webapp.RequestHandler):
         user = helpers.get_session_user()
         title = self.request.get('title')
         description = self.request.get('description')
-        logging.info('title: %s description: %s' % (title, description))
+        logging.info('title: "%s" description: "%s" - args "%s"' % (title, description, self.request.arguments()))
         session = models.Session(title=title, description=description, submitter=user).save()
         self.redirect('/')
 
