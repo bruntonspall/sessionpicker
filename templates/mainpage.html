@@ -36,10 +36,10 @@
 				{% if session.user_has_voted_for %}
 				<p>You already want to attend this</p>
 				{% else %}
-				<p><a href="/session/{{session.key}}/like">I'd like to attend this</a></p>
+				<a href="/session/{{session.key}}/like">I'd like to attend this</a>
 				{% endif %}
 				{% else %}
-				<p>Login to indicate you'd attend this</p>
+				<p>If you were logged in, you could indicate you'd attend this</p>
 				{% endif %}
 			</div>
 		</article>
