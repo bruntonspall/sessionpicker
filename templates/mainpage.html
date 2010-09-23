@@ -25,7 +25,7 @@
 	<section class="sessions">
 		{% for session in sessions %}
 		<article class="session">
-			<img src="{{session.submitter.image_url}}">
+			<a href="http://twitter.com/{{session.submitter.twitter_name}}"><img src="{{session.submitter.image_url}}"></a>
 			<h2>{{session.title}}</h2>
 			<h3>{{session.submitter.display_name}}</h3>
 			<div class="description">
